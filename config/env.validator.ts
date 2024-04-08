@@ -11,7 +11,7 @@ for (const variable of requiredVariables) {
 }
 
 export const env = {
-  POSTGRES_HOST: process.env.POSTGRES_HOST as string,
+  POSTGRES_HOST: process.env.DATABASE_HOST as string,
   POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT as string),
   POSTGRES_DATABASE: process.env.POSTGRES_DATABASE as string,
   POSTGRES_USER: process.env.POSTGRES_USER as string,

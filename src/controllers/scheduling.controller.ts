@@ -7,10 +7,6 @@ export const createScheduling = async (
 ): Promise<void> => {
   try {
     const { name, email } = req.body;
-    const hasExist = await SchedulingModel.findOne({
-      attributes: ["email"],
-    });
-    if (hasExist) throw Error("email has exist");
     const scheduling = await SchedulingModel.create({ name, email });
     res.status(201).json(scheduling);
   } catch (error) {

@@ -1,0 +1,21 @@
+version: "3"
+services:
+  database:
+    container_name: database
+    image: postgres:16.2
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+  backend:
+    container_name: backend
+    depends_on:
+      - database
+    restart: always
+    build: ./
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env

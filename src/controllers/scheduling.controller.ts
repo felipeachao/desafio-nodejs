@@ -7,6 +7,10 @@ export const createScheduling = async (
 ): Promise<void> => {
   try {
     const { name, email } = req.body;
+    const hasExist = await SchedulingModel.findOne({
+      attributes: ["email"],
+    });
+    if (hasExist) throw Error("email has exist");
     const scheduling = await SchedulingModel.create({ name, email });
     res.status(201).json(scheduling);
   } catch (error) {
@@ -34,11 +38,10 @@ export const deleteScheduling = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const deletedCount = await SchedulingModel.destroy({ where: { id } });
-    if (deletedCount !== 1) {
-      res.status(404).send("scheduling not found");
-    }
-    res.status(204).send();
+    const hasExist = await SchedulingModel.findByPk(id);
+    if (!hasExist) throw Error(`Scheduling not found`);
+    await SchedulingModel.destroy({ where: { id } });
+    res.status(204).send("scheduling deleted with sucess");
   } catch (error) {
     console.error(error);
     res.status(500).send("error when deleting schedule");
